@@ -171,8 +171,8 @@ for(Jugador un :jugadoresProcesados){
 
 	boolean mayor=true;
 	
-	int may;
-	Stack<Jugador> mayorpuntaje = new Stack<Jugador>();
+	Queue<Jugador>  loserJugadores = new LinkedList<Jugador>();
+	Stack<Jugador> winerPuntajeAlto = new Stack<Jugador>();
 		while(!jugadoresProcesados.isEmpty()){
 			
 			jugad=jugadoresProcesados.poll();
@@ -180,33 +180,34 @@ for(Jugador un :jugadoresProcesados){
 			
 			if (mayor){
 				
-		//	may=jugad.getPuntos();
-			mayorpuntaje.push(jugad);
+		
+			winerPuntajeAlto.push(jugad);
 			mayor=false;
-			}else if (jugad.getPuntos()>=mayorpuntaje.peek().getPuntos()){
+			}else if (jugad.getPuntos()>=winerPuntajeAlto.peek().getPuntos()){
 				
-			if (jugad.getPuntos()==mayorpuntaje.peek().getPuntos()){
-				 mayorpuntaje.push(jugad);
-			}else{
+			       if (jugad.getPuntos()==winerPuntajeAlto.peek().getPuntos()){
+				          winerPuntajeAlto.push(jugad);
+			       }else{
 				
-				if(mayorpuntaje.size()>=1){
+				          if(winerPuntajeAlto.size()>=1){
 				
-					while(!mayorpuntaje.isEmpty()){
+					          while(!winerPuntajeAlto.isEmpty()){
+						           loserJugadores.add(winerPuntajeAlto.pop());
 						
-						mayorpuntaje.pop();
-					}
-					mayorpuntaje.push(jugad);
+						
+					            }
+					               winerPuntajeAlto.push(jugad);
 					
-				}else{
+			         	   }else{
 				
-				mayorpuntaje.pop();
-			    mayorpuntaje.push(jugad);
+				               	loserJugadores.add(winerPuntajeAlto.pop());
+			                     winerPuntajeAlto.push(jugad);
 			    
-				}
-			}		
+				             }
+			         }		
+			}else{
+		   	loserJugadores.add(jugad);
 			}
-					
-				
 		    }
 			
 		
@@ -220,15 +221,22 @@ for(Jugador un :jugadoresProcesados){
 		
 		System.out.println("----------------------------------------------------------------------");
 
-		while(!mayorpuntaje.isEmpty()){
-			jugad=mayorpuntaje.pop();
+		while(!winerPuntajeAlto.isEmpty()){
+			jugad=winerPuntajeAlto.pop();
 			System.out.println("Gana apuesta  jugador |"+jugad.getIdjugador()+"| puntos :" +jugad.getPuntos());
 			
 		}
 		
-		
+		while(! loserJugadores.isEmpty()){
+			jugad= loserJugadores.poll();
+			System.out.println("Pierde apuesta  jugador |"+jugad.getIdjugador()+"| puntos :" +jugad.getPuntos());
+			
+		}
 		
 		System.out.println("________________FIN DEL JUEGO PUNTO_________________");
+		System.out.println("  ");
+		System.out.println("  ");
+		System.out.println("  ");
 	}
 
 	@Override
