@@ -28,8 +28,7 @@ public class Main {
 		juegosCasino.add(ahoracad2);
 		juegosCasino.add(ahoracad3);
 		juegosCasino.add(ahoracad4);
-			//sum=(int)(m.nextDouble() * 6 + 1)+(int)(m.nextDouble() * 6 + 1);
-            //System.out.println(sum);
+			
 
 		for (Juego juegos: juegosCasino) {
 			
