@@ -6,106 +6,93 @@ import java.util.Random;
 import java.util.Stack;
 
 public class Elpunto extends Juego {
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 	public Elpunto() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Elpunto(double importeDeApuesta, String nombreDelJuego) {
 		super(importeDeApuesta, nombreDelJuego);
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	public Elpunto(int cantidaDeJugadores, double importeDeApuesta, String nombreDelJuego) {
 		super(cantidaDeJugadores, importeDeApuesta, nombreDelJuego);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Elpunto(int cantidaDeJugadores, double importeDeApuesta) {
 		super(cantidaDeJugadores, importeDeApuesta);
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	@Override
 	public void Jugar() {
 		System.out.println("_________________________El PUNTO_________________________");
+		System.out.println("Cantidad jugadores  : |"+this.getCantidaDeJugadores()+"|  Importe de apuesta por cada jugador : $ "  +this.getImporteDeApuesta());
+		System.out.println(" ");
 		Queue<Jugador>  coladejugador = new LinkedList<Jugador>();
 		Queue<Jugador>  jugadoresProcesados = new LinkedList<Jugador>();
 	
 		Jugador  jugad=new Jugador();
+	
 		
 		for (int i=1;i<=this.getCantidaDeJugadores();i++){
 			
 			jugad = new Jugador(i,4,0);
-			System.out.println(i+  "usuario");
+			
 			coladejugador.add(jugad);
 		}
 		
 		
 		 
 		Random tiraDado=new Random();
-		int b;
-		int a;
-		int c; 
+		int lanzamiento_a;
+		int lanzamiento_b;
+		int lanzamiento_c; 
 		Stack<Integer>  pilanum = new Stack<Integer>();
 		
 		while(!coladejugador.isEmpty()){
 			Stack<Integer>  sumpila = new Stack<Integer>();
 			jugad=coladejugador.poll();
+			System.out.println("jugador   : |"+jugad.getIdjugador()+"|");
 			boolean band=false;
 			   while(jugad.getCantDejugadas()!=0){
-			              a = (int)(tiraDado.nextDouble() * 6 + 1);
-			              b = (int)(tiraDado.nextDouble() * 6 + 1);
-			              c = (int)(tiraDado.nextDouble() * 6 + 1);
-			                   pilanum.add(a);
-			                   pilanum.add(b);
-			                   pilanum.add(c);
+			              lanzamiento_a = (int)(tiraDado.nextDouble() * 6 + 1);
+			              lanzamiento_b = (int)(tiraDado.nextDouble() * 6 + 1);
+			              lanzamiento_c = (int)(tiraDado.nextDouble() * 6 + 1);
+			                   pilanum.add(lanzamiento_a);
+			                   pilanum.add(lanzamiento_b);
+			                   pilanum.add(lanzamiento_c);
 			  
 			                   while(!pilanum.isEmpty()){     
-			                   if(pilanum.peek()==1 || pilanum.peek()==3 || pilanum.peek()==5)
-			                        {
-			                        	if(pilanum.peek()==1){
-			                        		 sumpila.push(1);
+			                      if(pilanum.peek()==1 || pilanum.peek()==3 || pilanum.peek()==5)
+			                       {
+			                        	  if(pilanum.peek()==1){
+			                        		  sumpila.push(1);
 						                       pilanum.pop();
 			                        		
-			                        	}else if (pilanum.peek()==3){
-			                        		 sumpila.push(2);
+			                        	  }else if (pilanum.peek()==3){
+			                        		   sumpila.push(2);
 						                       pilanum.pop();
 			                        		
-			                        	}else if(pilanum.peek()==5){
-			                        		 sumpila.push(4);
+			                        	  }else if(pilanum.peek()==5){
+			                        		   sumpila.push(4);
 						                       pilanum.pop();
-			                        	}
+			                        	  }
 				                      
 			                        }else{
-			                        	pilanum.pop();
+			                        	  pilanum.pop();
 			                        	
 			                        }
-			                   }
+			                   }/*fin de mientras*/
 			                        
 			                        
 			                        	
-			                    if( a== b && b== c){
-			                           if(a==2 || a==4||a==6){
+			                    if( lanzamiento_a== lanzamiento_b && lanzamiento_b== lanzamiento_c){
+			                           if(lanzamiento_a==2 || lanzamiento_a==4||lanzamiento_a==6){
 					                         band=true;
 					                      }			                                
 			                     }
@@ -114,124 +101,97 @@ public class Elpunto extends Juego {
 			                        
 			                        
 			  
-			 int sum=0;
-			  while(!sumpila.isEmpty()){
+			                int sum=0;
+			               while(!sumpila.isEmpty()){
+										sum=sum+sumpila.pop();
 					
-					sum=sum+sumpila.pop();
-					
-				}
-			  if(sum!=0){
-			  sumpila.push(sum);
-			    }
+			            	}
+			               if(sum!=0){
+			                  sumpila.push(sum);
+			                }
 			  
 			
-			   jugad.setCantDejugadas(jugad.getCantDejugadas()-1);
-			System.out.println(a+ "  "+b+"     "+c);
+			               jugad.setCantDejugadas(jugad.getCantDejugadas()-1);
+			               System.out.println("lanzamineto -->"+(jugad.getCantDejugadas()+1)+"  valor de los dados : "+ lanzamiento_a+ "   "+lanzamiento_b+"   "+lanzamiento_c);
 			
-			}
-			System.out.println("---------------------------------------------------------------  ");
-			 int sum=0;
-			  int prod=0;
-				while(!sumpila.isEmpty()){
-					
-					sum=sum+sumpila.pop();
-					
-				}
-				if(band){
-					
-				prod=sum*2;
-				jugad.setPuntos(prod);
-				jugadoresProcesados.add(jugad);
-				}else{
+			}/*fin del  mientras */
+			     System.out.println("------------------------------------------------------  ");
+			     int sum=0;
+			     int prod=0;
+				 while(!sumpila.isEmpty()){
+						sum=sum+sumpila.pop();
+				 }
+				 if(band){
+    				prod=sum*2;
+				    jugad.setPuntos(prod);
+				    jugadoresProcesados.add(jugad);
+				 }else{
 					jugad.setPuntos(sum);
 					jugadoresProcesados.add(jugad);
 					
 				}
 			  
 			
-		}
+		}/*fin del mientras */
 		
-for(Jugador un :jugadoresProcesados){
-		System.out.println("jugador |"+un.getIdjugador()+"| puntos :" +un.getPuntos());
-}
+		           /*mostrando  los puntos de los jugaadores */
+                   for(Jugador un :jugadoresProcesados){
+		                  System.out.println("jugador |"+un.getIdjugador()+"| puntos :" +un.getPuntos());
+                   }
 		
+                   /*buscando los jugador o jugadores  con mayor puntaje*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-	boolean mayor=true;
+                  
+                    boolean mayor=true;
 	
-	Queue<Jugador>  loserJugadores = new LinkedList<Jugador>();
-	Stack<Jugador> winerPuntajeAlto = new Stack<Jugador>();
-		while(!jugadoresProcesados.isEmpty()){
+	                Queue<Jugador>  loserJugadores = new LinkedList<Jugador>();
+	                Stack<Jugador> winerPuntajeAlto = new Stack<Jugador>();
+		            while(!jugadoresProcesados.isEmpty()){
 			
-			jugad=jugadoresProcesados.poll();
-			
-			
-			if (mayor){
+			                 jugad=jugadoresProcesados.poll();
+			                if (mayor){
+				     			winerPuntajeAlto.push(jugad);
+			                    mayor=false;
+			                }else if (jugad.getPuntos()>=winerPuntajeAlto.peek().getPuntos()){
 				
-		
-			winerPuntajeAlto.push(jugad);
-			mayor=false;
-			}else if (jugad.getPuntos()>=winerPuntajeAlto.peek().getPuntos()){
-				
-			       if (jugad.getPuntos()==winerPuntajeAlto.peek().getPuntos()){
-				          winerPuntajeAlto.push(jugad);
-			       }else{
-				
-				          if(winerPuntajeAlto.size()>=1){
-				
-					          while(!winerPuntajeAlto.isEmpty()){
-						           loserJugadores.add(winerPuntajeAlto.pop());
-						
-						
-					            }
-					               winerPuntajeAlto.push(jugad);
+			                      if (jugad.getPuntos()==winerPuntajeAlto.peek().getPuntos()){
+				                     winerPuntajeAlto.push(jugad);
+			                       }else{
+				                       if(winerPuntajeAlto.size()>=1){
+									          while(!winerPuntajeAlto.isEmpty()){
+						                         loserJugadores.add(winerPuntajeAlto.pop());
+						                       }
+					                          winerPuntajeAlto.push(jugad);
 					
-			         	   }else{
-				
-				               	loserJugadores.add(winerPuntajeAlto.pop());
-			                     winerPuntajeAlto.push(jugad);
+			         	                }else{
+								               	loserJugadores.add(winerPuntajeAlto.pop());
+			                                     winerPuntajeAlto.push(jugad);
 			    
-				             }
-			         }		
-			}else{
-		   	loserJugadores.add(jugad);
-			}
+				                        }
+			                      }		
+			                 }else{
+		                           	loserJugadores.add(jugad);
+			                 }
 		    }
 			
 		
 				
-			
+						
 		
-				
-			
-			
-			
-		
-		System.out.println("----------------------------------------------------------------------");
+		System.out.println("------------------------------------------------------");
 
-		while(!winerPuntajeAlto.isEmpty()){
-			jugad=winerPuntajeAlto.pop();
-			System.out.println("Gana apuesta  jugador |"+jugad.getIdjugador()+"| puntos :" +jugad.getPuntos());
-			
-		}
-		
 		while(! loserJugadores.isEmpty()){
 			jugad= loserJugadores.poll();
-			System.out.println("Pierde apuesta  jugador |"+jugad.getIdjugador()+"| puntos :" +jugad.getPuntos());
+			System.out.println("Pierde apuesta  jugador : |"+jugad.getIdjugador()+"| puntos :" +jugad.getPuntos());
 			
 		}
+		while(!winerPuntajeAlto.isEmpty()){
+			jugad=winerPuntajeAlto.pop();
+			System.out.println("GANA APUESTA JUGADOR  : |"+jugad.getIdjugador()+"| puntos :" +jugad.getPuntos());
+			
+		}
+		
+		System.out.println("");
 		
 		System.out.println("________________FIN DEL JUEGO PUNTO_________________");
 		System.out.println("  ");
@@ -241,7 +201,11 @@ for(Jugador un :jugadoresProcesados){
 
 	@Override
 	public void totalApuesta() {
-		// TODO Auto-generated method stub
+		
+		
+		Double total= this.getCantidaDeJugadores()*this.getImporteDeApuesta();
+		
+		System.out.println("total apues del punto:" +total);
 		
 	}
 

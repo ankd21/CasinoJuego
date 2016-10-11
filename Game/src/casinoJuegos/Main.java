@@ -1,6 +1,8 @@
 package casinoJuegos;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Random;
 //import java.util.Random;
 
 
@@ -10,35 +12,48 @@ public class Main {
 	public static ArrayList<Juego> juegosCasino = new ArrayList<Juego>();
 	public static void main(String[] args) {
 		
-		//Random m = new Random();
-                                //cantidad de jugadores , importe, nombredeljuego		
-		Juego crap = new Craps(5,30.0,"craps");
-		// cantidaDeJugadores, modo principia avanzad,  importeDeApuesta
-		Juego ahoracad = new Ahorcado(3,"principiante",10.0);
-		Juego elpunto = new Elpunto(80,34.0,"craps");
-		Juego ahoracad1 = new Ahorcado(3,"principiante",10.0);
-		Juego ahoracad2 = new Ahorcado(3,"principiante",10.0);
-		Juego ahoracad3 = new Ahorcado(3,"principiante",10.0);
-		Juego ahoracad4 = new Ahorcado(3,"principiante",10.0);
-		juegosCasino.add(crap);
-		juegosCasino.add(elpunto);;
+		
+	  
+	    
+		
+		         
+		//Juego crap = new Craps(5,30.0,"craps");
+		//Juego ahoracad = new Ahorcado(3,"principiante",10.0);				
+		Juego elpunto = new Elpunto(cantjugadores(),  importeJuego(), "Craps");
+	
+		juegosCasino.add(elpunto);
+		//juegosCasino.add(elpunto);;
 		/*juegosCasino.add(ahoracad);
 	
-		juegosCasino.add(ahoracad1);
-		juegosCasino.add(ahoracad2);
-		juegosCasino.add(ahoracad3);
-		juegosCasino.add(ahoracad4);
-			*/
+	    */
 
 		for (Juego juegos: juegosCasino) {
 			
-			juegos.Jugar();//
+			juegos.Jugar();
+		
 		}
 		
 		
+	for (Juego juegos: juegosCasino) {
+			
+			juegos.totalApuesta();
 		
-		
-		
+		}
 	}
 
+
+	static  int cantjugadores(){
+		Random aleatorio = new Random();
+		return   aleatorio.nextInt(5)+2;
+	}
+     static  double importeJuego(){
+	Random aleatorio = new Random();
+		
+	double imp = aleatorio.nextDouble()*300.0+10.0;
+    double importe = Math.rint(imp*100)/100;
+    
+    return importe;
+    
+	}
+	
 }
