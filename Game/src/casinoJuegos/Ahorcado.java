@@ -113,21 +113,17 @@ public class Ahorcado extends Juego {
 			
 		}
 		System.out.print("cantidad de caracter es "+ palabraAjugar.length());
-		System.out.print("  letras es "+ palabraAjugar +" ");
+		System.out.print("  letras  aculta seria ("+ palabraAjugar +")  (");
 		
 		
 		 AleatorioSinRepetir aleato = new  AleatorioSinRepetir(0,25);
 		for(int i=0;i<palabraAjugar.length();i++){System.out.print(letralist.get(i));}//muestras la letra oculta
 		
+		System.out.println(") ");
+		
 		System.out.println(" ");
 		
 	
-		
-		/*System.out.println(Character.toString(palabraAjugar.charAt(2)));
-	String m = Character.toString(palabraAjugar.charAt(2));
-		
-		
-		System.out.println("existe letra :"+existeletra(palabraAjugar,palabraAjugar));*/
 		
 		
 		

@@ -17,11 +17,11 @@ public class Main {
 	    
 		
 		         
-		cantjugadoresAhorcado();
+	//	cantjugadoresAhorcado();
 			
 		Juego elpunto = new Elpunto(cantjugadores(), importeJuego(), " EL Punto");
 		Juego crap = new Craps(cantjugadores() ,importeJuego(),"Craps");
-		Juego ahoracad = new Ahorcado(3,"avanzado",importeJuego());		
+		Juego ahoracad = new Ahorcado(cantjugadoresAhorcado(),modoJugador(),importeJuego());		
 		juegosCasino.add(elpunto);
 		juegosCasino.add(crap);
 		juegosCasino.add(ahoracad);
