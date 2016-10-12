@@ -19,27 +19,28 @@ public class Ahorcado extends Juego {
 	
       public Ahorcado() {
 		super();
-		// TODO Auto-generated constructor stub
+	
 	}
 
-	public Ahorcado(double importeDeApuesta, String nombreDelJuego) {
+	public Ahorcado( String modo,double importeDeApuesta,String nombreDelJuego) {
 		super(importeDeApuesta, nombreDelJuego);
-		// TODO Auto-generated constructor stub
+		this.modo = "principiante";
+		this.setCantidaDeJugadores(1);
 	}
 
 	public Ahorcado(int cantidaDeJugadores, double importeDeApuesta, String nombreDelJuego) {
 		super(cantidaDeJugadores, importeDeApuesta, nombreDelJuego);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Ahorcado(int cantidaDeJugadores, double importeDeApuesta) {
 		super(cantidaDeJugadores, importeDeApuesta);
-		// TODO Auto-generated constructor stub
 	}
+
 	public Ahorcado(int cantidaDeJugadores,String modo, double importeDeApuesta) {
 		super(cantidaDeJugadores, importeDeApuesta);
 		this.modo = modo;
-		// TODO Auto-generated constructor stub
+		this.setNombreDelJuego("Ahorcado");
 	}
 	public String getModo() {
 		return modo;
@@ -49,23 +50,7 @@ public class Ahorcado extends Juego {
 		this.modo = modo;
 	}
 
-	@Override
-	public void totalApuesta() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void totalPremio() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void totalComicion() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	/* (non-Javadoc)
 	 * @see casinoJuegos.Juego#Jugar()
@@ -86,10 +71,10 @@ public class Ahorcado extends Juego {
 		
 		String palabraAjugar= this.obtenerListaDepalabras().get(((int)(aleatorio.nextDouble() *  this.obtenerListaDepalabras().size()+ 0)));
 	
-		ArrayList<Character> letralist= new ArrayList<Character>();//creo un array de lista para almacenar letra
+		ArrayList<Character> letralist= new ArrayList<Character>();//creo un array de lista para almacenar letra oculta
 		
 
-		//cargando palabra con _
+		//cargando palabra con _ oculta
 		for(int i=0;i<palabraAjugar.length();i++){letralist.add('-');}
 		
 		
@@ -101,29 +86,30 @@ public class Ahorcado extends Juego {
 		boolean band=true;
 		ArrayList<Character> mostrarpalabraenCurso;
 		
-		Jugador unjugad = new Jugador();
+		Jugador unJugador = new Jugador();
 		
 		boolean banderaGanador=true;
 		//.....;........................
 		if (this.getModo()=="principiante"){
-			System.out.println("____________AHORCADO MODO PRINCIPIANTE____________");
-		for(int i=0;i<this.getCantidaDeJugadores();i++){
-              System.out.println("cantidad  de jugadores :"+(i+1));
+			 System.out.println(" "); System.out.println(" ");
+			System.out.println("======================AHORCADO MODO PRINCIPIANTE===================");
+		for(int i=1;i<=this.getCantidaDeJugadores();i++){
+              System.out.println("cantidad  de jugadores :"+i);
 			
-			unjugador = new Jugador(i+1,0,7);
+			unjugador = new Jugador(i,0,7);
 		listajugadores.add(unjugador);
 		}
 		}else{
-			System.out.println("____________AHORCADO MODO AVANZADO____________");
-			
-			
-			int al = (int)(aleatorio.nextDouble() * this.getCantidaDeJugadores() + 1);
-			System.out.println("aleatorio" +al);
-			for(int i=0;i<this.getCantidaDeJugadores();i++){
+			 System.out.println(" "); System.out.println(" ");
 				
-				unjugador = new Jugador(i,0,4);
-				listajugadores.add(unjugador);
+			System.out.println("================AHORCADO MODO AVANZADO=================");
+			for(int i=1;i<=this.getCantidaDeJugadores();i++){
+	              System.out.println("cantidad  de jugadores :"+i);
+				
+				unjugador = new Jugador(i,0,7);
+			listajugadores.add(unjugador);
 			}
+			
 			
 		}
 		System.out.print("cantidad de caracter es "+ palabraAjugar.length());
@@ -135,162 +121,338 @@ public class Ahorcado extends Juego {
 		
 		System.out.println(" ");
 		
-		
-		while(!listajugadores.isEmpty()){
-			//unjugad=listajugadores.peek();
-			 unjugad=listajugadores.poll();
-			 
-			// System.out.println(" Jugador----------------------------   |"+ unjugad.getIdjugador()+"|   vidaa :"+  unjugad.getVidasParaJugar());
-			
-			 if(unjugad.getVidasParaJugar()!=0){
-		                      
-				
-		                 		 letraGenerada= abecedario[aleato.generar()];
-
-
-		                 		if(existeletra(palabraAjugar,letraGenerada) ==1){//si letra  existe en la   palabra vuelvo a tirar
-		                 		
-		                 			System.out.println("jugador- :" +unjugad.getIdjugador() +" asigno "+letraGenerada );
-		                 			mostrarListaCaracter(remplazarLetraEncontrada(palabraAjugar,letraGenerada,letralist));
-		                 			System.out.println(" ");
-		                 			if (letraEsAdivinada(letralist,palabraAjugar)){
-		                 				System.out.println(" GANA JUGADOR :   "+unjugad.getIdjugador()+" felicitaciones !!");
-		                 				
-		                 				while(!listajugadores.isEmpty()){
-		                 					System.out.println(" El jugador :  "+listajugadores.poll().getIdjugador()+ " pierde su juego");
-		                 					
-		                 					
-		                 				}
-		                 			           
-		                 			           
-		                 			}
-		                 			 band=true;
-		                 			
-		          		                          while(band==true &&!listajugadores.isEmpty()){
-		          		                                   	        letraGenerada=lanzaUnaLetraOpalabraCompleta();//si letra  existe vuelvo a tirar
-		          		       	                                     if(existeletra(palabraAjugar,letraGenerada) ==1){
-		          		       		
-		          		       	                                     System.out.println("jugador-+ :" +unjugad.getIdjugador() +" asigno "+letraGenerada );
-		          		      		                 			     mostrarListaCaracter(remplazarLetraEncontrada(palabraAjugar,letraGenerada,letralist));
-		          		      		                 			     System.out.println(" ");
-		          		      		                 			if (letraEsAdivinada(letralist,palabraAjugar)){
-		          		  		                 				System.out.println(" GANA JUGADOR :   "+unjugad.getIdjugador()+" felicitaciones !!");
-		          		  		                 				
-		          		  		                 				while(!listajugadores.isEmpty()){
-		          		  		                 					System.out.println(" El jugador :  "+listajugadores.poll().getIdjugador()+ " pierde su juego");
-		          		  		                 					
-		          		  		                 					
-		          		  		                 				}
-		          		  		                 			           
-		          		  		                 			           
-		          		  		                 			}
-		          		       		
-		          		       	                                      }else if (existeletra(palabraAjugar,letraGenerada)==2){
-		          		       	                                    	System.out.println(" GANA JUGADOR :   "+unjugad.getIdjugador()+" felicitaciones !!");
-				          		  		                 				
-				          		  		                 				while(!listajugadores.isEmpty()){
-				          		  		                 					System.out.println(" El jugador :  "+listajugadores.poll().getIdjugador()+ " pierde su juego");
-				          		  		                 					
-				          		  		                 					
-				          		  		                 				}
-				          		  		                 			           
-		          		       	                                    	  
-		          		       	                                      }else{//la letra no existe
-		          		       	                                    	  
-		          		       	                                    	       band=false;
-		          		       	                                    		  
-		          		       	                                    	         System.out.println(" Jugador   |"+ unjugad.getIdjugador()+"|   asigno :"+ letraGenerada);
-		          		       						                
-		          		       		    		                                  unjugad.setVidasParaJugar(	unjugad.getVidasParaJugar()-1);
-		          		       					                                  System.out.println("pierde un punto cant "+ unjugad.getVidasParaJugar());
-		          		       				                   	
-		          		       				               		                  Stack<String> pilacopi = unjugad.getPilaDibujoAhorcado();
-		          		       		  		               	                      pilacopi.push(dibujoahorcado[unjugad.getVidasParaJugar()]);//voy dibujando el ahoracado
-		          		       				               		
-		          		       				               		                  unjugad.setVidasParaJugar(unjugad.getVidasParaJugar());
-		          		       				               		                  Stack<String> agrega = mostrarPilaDeVida(pilacopi);
-		          		       				               		                  unjugad.setPilaDibujoAhorcado(agrega);
-		          		       				               		        
-		          		       				               		                  listajugadores.addFirst(unjugad);
-		          		       	                                    		  
-		          		       	                                    	
-		          		       	                                    	        
-		          		       	                                    	  
-		          		       	                                                     if(listajugadores.peekFirst().getVidasParaJugar()==0){
-		          		       	   		                    	                              //System.out.println(" Jugador   |"+ unjugad.getIdjugador()+"|   pierde juego ");
-		          		       	   		                    	                                 System.out.println(" Jugador   |"+ unjugad.getIdjugador()+"|    -----------PIERDE JUEGO----- (GAME OVER)  !!!");
-		          		       	   		                    	                              listajugadores.poll();
-		          		       	   		                    	
-		          		       	   		                                               }else{
-		          		       	   		               		
-		          		       	   		                     	                            listajugadores.addLast(listajugadores.poll());
-		          		       	   		                                               }
-		          		       	                                    	  
-		          		       	                                    	  
-		          		       	                                           }
-		          		       	                                      
-		          		        	   
-		          		        	   
-		          		        	 
-		          		        	 
-		          		        	   
-		          		                                  }
-		                 			
-		                 			
-		                 			
-		                 			
-		                 		}else if (existeletra(palabraAjugar,letraGenerada) ==2){
-		                 			
-		                 			
-	  		                 				System.out.println(" GANA JUGADOR :   "+unjugad.getIdjugador()+" felicitaciones !!");
-	  		                 				
-	  		                 				while(!listajugadores.isEmpty()){
-	  		                 					System.out.println(" El jugador :  "+listajugadores.poll().getIdjugador()+ " pierde su juego");
-	  		                 					
-	  		                 					
-	  		                 			      }
-		                 		
-			                     }else{
-		                 			
-		                 			   System.out.println(" Jugador   |"+ unjugad.getIdjugador()+"|   asigno :"+ letraGenerada);
-						                
-	    		                       unjugad.setVidasParaJugar(	unjugad.getVidasParaJugar()-1);
-				                       System.out.println("pierde un punto cant "+ unjugad.getVidasParaJugar());
-			                   	
-			               		       Stack<String> pilacopi = unjugad.getPilaDibujoAhorcado();
-	  		               	           pilacopi.push(dibujoahorcado[unjugad.getVidasParaJugar()]);//voy dibujando el ahoracado
-			               		
-			               		        unjugad.setVidasParaJugar(unjugad.getVidasParaJugar());
-			               		       Stack<String> agrega = mostrarPilaDeVida(pilacopi);
-			               		        unjugad.setPilaDibujoAhorcado(agrega);
-			               		        
-			               		     listajugadores.addFirst(unjugad);
-		                 			
-			                         if(listajugadores.peekFirst().getVidasParaJugar()==0){
-	                    	                System.out.println(" Jugador   |"+ unjugad.getIdjugador()+"|    -----------PIERDE JUEGO----- (GAME OVER)  !!!");
-	                    	                   listajugadores.poll();
-	                    	
-	                                 }else{
-	               		
-	                     	               listajugadores.addLast(listajugadores.poll());
-	                                 }
-	               	                 	
-			               		     
-		                 		       }
-		                 		  
-		                 		System.out.println("--------------------------------------------------------------------------");
-		               
-		                       //listajugadores.add(unjugad);
-		
-		}
-		
-			
-			
-			
-	}	//end of While
-			
 	
 		
+		/*System.out.println(Character.toString(palabraAjugar.charAt(2)));
+	String m = Character.toString(palabraAjugar.charAt(2));
+		
+		
+		System.out.println("existe letra :"+existeletra(palabraAjugar,palabraAjugar));*/
+		
+		
+		
+		while(!listajugadores.isEmpty()){
+			
+			 unJugador=listajugadores.poll();
+			 			
+			 if(unJugador.getVidasParaJugar()!=0){
+				     letraGenerada= abecedario[aleato.generar()];
+					     if(existeletra(palabraAjugar,letraGenerada) ==1){///________________________________________1
+						
+						       System.out.println("jugador :|" +unJugador.getIdjugador() +"| asigno  '"+letraGenerada+"'  correcta ! " );
+						       
+             			      mostrarListaCaracter(remplazarLetraEncontrada(palabraAjugar,letraGenerada,letralist));
+             		    	 
+             			     System.out.println("------------------------------------------------------------------");	 
+             			     boolean bandera=true;
+             			              if (letraEsAdivinada(letralist,palabraAjugar)){
+             			            	  bandera=false;
+		                                          System.out.println(" GANA JUGADOR :   "+unJugador.getIdjugador()+" felicitaciones !!");
+		
+		                                     while(!listajugadores.isEmpty()){
+			                                     System.out.println(" El jugador :  "+listajugadores.poll().getIdjugador()+ " pierde su juego");
+			
+			
+		                                     }
+	           
+		                                }
+             			      
+             			    
+             		         while(bandera==true ){
+                          	        letraGenerada=abecedario[aleato.generar()];//si letra  existe vuelvo a tirar
+	                                     if(existeletra(palabraAjugar,letraGenerada) ==1){
+	                                    	                   System.out.println("jugador :|" +unJugador.getIdjugador() +"| asigno  '"+letraGenerada+"'  correcta ! " );
+	                                                            
+		                 			                            mostrarListaCaracter(remplazarLetraEncontrada(palabraAjugar,letraGenerada,letralist));
+		                 			                            System.out.println(" ");
+		                 			                            if (letraEsAdivinada(letralist,palabraAjugar)){
+	                 				                            System.out.println(" GANA JUGADOR :   "+unJugador.getIdjugador()+" felicitaciones !!1");
+	                 				                           bandera=false;
+	                 				                              while(!listajugadores.isEmpty()){
+	                 					                                System.out.println(" El jugador :  "+listajugadores.poll().getIdjugador()+ " pierde su juego");
+	                 					
+	                 					
+	                 				                                }
+	                 			           
+		                 			                            }
+	                 			                           
+		                 			                           System.out.println("------------------------------------------------------------------");	 
+             			      
+	                                      }else if(existeletra(palabraAjugar,letraGenerada) ==2){
+	                                    	  
+	                                    	  bandera=false;
+	                                    	    System.out.println(" GANA JUGADOR :   "+unJugador.getIdjugador()+" felicitaciones !!");
+	      	                 				
+ 				                                while(!listajugadores.isEmpty()){
+ 					                                System.out.println(" El jugador :  "+listajugadores.poll().getIdjugador()+ " pierde su juego");
+ 					
+ 					
+ 				                                }
+	                                    	  
+	                                    	  
+	                                    	  
+	                                    	  
+	                                    	  
+	                                      }else{
+	                                    	  bandera=false;
+	                                    	 
+	                                     	 
+
+	             					    	 
+	                    		        	  System.out.println(" Jugador   |"+ unJugador.getIdjugador()+"|   asigno : '"+ letraGenerada + "'  incorrecta !");
+	                    		        	  
+	                    		        	  
+	                    		        	  
+	                    		        	  
+	                    		        	  
+	                    		        	  
+	                    		    
+	                    		        	  if(this.getModo().equals("principiante")){
+	                    		        		  int i=0;
+	                    		        		  while(this.getCantidaDeJugadores()>i && unJugador.getVidasParaJugar()!=0){
+	                    		        			  i++;
+	                    		        			  System.out.println("quitando vida.");
+	                                             unJugador.setVidasParaJugar(unJugador.getVidasParaJugar()-1);
+	                                           //  System.out.println("pierde  vida   cant restantes :"+ unJugador.getVidasParaJugar());
+	                           	
+	                       		                  Stack<String> pilacopi = unJugador.getPilaDibujoAhorcado();
+	                         	                      pilacopi.push(dibujoahorcado[unJugador.getVidasParaJugar()]);//voy dibujando el ahoracado
+	                       		
+	                       		                  unJugador.setVidasParaJugar(unJugador.getVidasParaJugar());
+	                       		                  Stack<String> agrega = mostrarPilaDeVida(pilacopi);
+	                       		                  unJugador.setPilaDibujoAhorcado(agrega);
+	                       		        
+	                       		                 
+	                    		        		  }
+	                    		        		  listajugadores.addFirst(unJugador);
+	                    		        	  }else{
+	                    		        		  int i=0;
+	                    		        		  while(2>i && unJugador.getVidasParaJugar()!=0){
+	                    		        			  i++;
+	                    		        			  System.out.println("quitando vida.");
+	                                             unJugador.setVidasParaJugar(unJugador.getVidasParaJugar()-1);
+	                                        
+	                           	
+	                       		                  Stack<String> pilacopi = unJugador.getPilaDibujoAhorcado();
+	                         	                      pilacopi.push(dibujoahorcado[unJugador.getVidasParaJugar()]);//voy dibujando el ahoracado
+	                       		
+	                       		                  unJugador.setVidasParaJugar(unJugador.getVidasParaJugar());
+	                       		                  Stack<String> agrega = mostrarPilaDeVida(pilacopi);
+	                       		                  unJugador.setPilaDibujoAhorcado(agrega);
+	                    		        		  }	       if (!listajugadores.isEmpty()){
+	                   		        	    	   LinkedList<Jugador> listaAux= new LinkedList<Jugador>();
+	                 		        			  
+	                		        	    	   while(!listajugadores.isEmpty()){
+	                		        	    	   
+	                		        			  Jugador unoJ =new Jugador();
+	                		        			  
+	                		        			  unoJ=listajugadores.poll();
+	                		        			  System.out.println("quitando vida a  jugador"+unoJ.getIdjugador());
+	                		        			  unoJ.setVidasParaJugar(unoJ.getVidasParaJugar()-1);
+	                		        			  Stack<String> pilacopi =   unoJ.getPilaDibujoAhorcado();
+	                     	                      pilacopi.push(dibujoahorcado[  unoJ.getVidasParaJugar()]);//voy dibujando el ahoracado
+	                   		
+	                     	                     unoJ.setVidasParaJugar(  unoJ.getVidasParaJugar());
+	                   		                    Stack<String> agrega = mostrarPilaDeVida(pilacopi);
+	                   		                 unoJ.setPilaDibujoAhorcado(agrega);
+	                   		                    listaAux.addLast(unoJ);
+	                		        	        }
+	                		        	    	   
+	                		        	    	 while(!listaAux.isEmpty()){
+	                		        	    		 Jugador unoJ =new Jugador();
+	                		        	    		 
+	                		        	    		 unoJ=listaAux.poll();
+	                		        	    		 
+	                		        	    		 if(unoJ.getVidasParaJugar()!=0){
+	                		        	    		 listajugadores.addLast(unoJ);
+	                		        	    		 }else{
+	                		        	    			 
+	                		        	    			 
+	                		        	    			 System.out.println(" jugador   |"+unoJ.getIdjugador() +"| -----PIERDE JUEGO-----!!	por otro jugador " );
+	                		        	    		 }
+	                		        	    		 
+	                		        	    	 }  
+	                        			  
+	                        			
+	                		        			  
+	                		        		  }
+	                    		        		  
+	                    		        		  
+	                    		        		  listajugadores.addFirst(unJugador);
+	                    		        	  }
+	                       		                  
+	                       		                  
+	                       		                  if(listajugadores.peekFirst().getVidasParaJugar()==0 && !listajugadores.isEmpty()){
+	                    	                       System.out.println(" Jugador   |"+ unJugador.getIdjugador()+"|    -----------PIERDE JUEGO----- (GAME OVER)  !!!");
+	                    	                       listajugadores.poll();
+	                    	
+	                                              }else{
+	                    	
+	                     	                         listajugadores.addLast(listajugadores.poll());
+	                                              }
+	                    		        	
+	                    		        	
+	                    		        	
+	                    		        	
+	                    		        	
+	                    		        	
+	                    					     
+	                                                                 
+	                                     
+	                                     
+             		         }
+             			      
+
+	                   	}//fin de segundo while
+             		         
+             		         
+				}else if (existeletra(palabraAjugar,letraGenerada) ==2){
+					    	 
+					
+					 System.out.println(" GANA JUGADOR :   "+unJugador.getIdjugador()+" felicitaciones !!");
+        				
+                      while(!listajugadores.isEmpty()){
+                          System.out.println(" El jugador :  "+listajugadores.poll().getIdjugador()+ " pierde su juego");
+
+
+                      }
+					
+					     
+		        }else {
+					    	 
+		        	  System.out.println(" Jugador   |"+ unJugador.getIdjugador()+"|   asigno : '"+ letraGenerada + "'  incorrecta !");
+		        	  
+		        	  
+		        	  
+		        	  
+		        	  
+		        	  
+		    
+		        	  if(this.getModo().equals("principiante")){
+		        		  int i=0;
+		        		  while(this.getCantidaDeJugadores()>i && unJugador.getVidasParaJugar()!=0){
+		        			  i++;
+		        			  System.out.println("quitando vida.");
+                         unJugador.setVidasParaJugar(unJugador.getVidasParaJugar()-1);
+                       //  System.out.println("pierde  vida   cant restantes :"+ unJugador.getVidasParaJugar());
+       	
+   		                  Stack<String> pilacopi = unJugador.getPilaDibujoAhorcado();
+     	                      pilacopi.push(dibujoahorcado[unJugador.getVidasParaJugar()]);//voy dibujando el ahoracado
+   		
+   		                  unJugador.setVidasParaJugar(unJugador.getVidasParaJugar());
+   		                  Stack<String> agrega = mostrarPilaDeVida(pilacopi);
+   		                  unJugador.setPilaDibujoAhorcado(agrega);
+   		        
+   		                 
+		        		  }
+		        		  listajugadores.addFirst(unJugador);
+		        	  }else{//avanzado
+		        		  
+		        		  int i=0;
+		        		  while(2>i && unJugador.getVidasParaJugar()!=0){
+		        			  i++;
+		        			  System.out.println("quitando vida.");
+                         unJugador.setVidasParaJugar(unJugador.getVidasParaJugar()-1);
+                       //  System.out.println("pierde  vida   cant restantes :"+ unJugador.getVidasParaJugar());
+       	
+   		                  Stack<String> pilacopi = unJugador.getPilaDibujoAhorcado();
+     	                      pilacopi.push(dibujoahorcado[unJugador.getVidasParaJugar()]);//voy dibujando el ahoracado
+   		
+   		                  unJugador.setVidasParaJugar(unJugador.getVidasParaJugar());
+   		                  Stack<String> agrega = mostrarPilaDeVida(pilacopi);
+   		                  unJugador.setPilaDibujoAhorcado(agrega);
+		        		  }
+		        		  
+		        	
+		        		  
+		        	       if (!listajugadores.isEmpty()){
+		        	    	   LinkedList<Jugador> listaAux= new LinkedList<Jugador>();
+		        			  
+		        	    	   while(!listajugadores.isEmpty()){
+		        	    	   
+		        			  Jugador unoJ =new Jugador();
+		        			  
+		        			  unoJ=listajugadores.poll();
+		        			  System.out.println("quitando vida a  jugador"+unoJ.getIdjugador());
+		        			  unoJ.setVidasParaJugar(unoJ.getVidasParaJugar()-1);
+		        			  Stack<String> pilacopi =   unoJ.getPilaDibujoAhorcado();
+     	                      pilacopi.push(dibujoahorcado[  unoJ.getVidasParaJugar()]);//voy dibujando el ahoracado
+   		
+     	                     unoJ.setVidasParaJugar(  unoJ.getVidasParaJugar());
+   		                    Stack<String> agrega = mostrarPilaDeVida(pilacopi);
+   		                 unoJ.setPilaDibujoAhorcado(agrega);
+   		                    listaAux.addLast(unoJ);
+		        	        }
+		        	    	   
+		        	    	 while(!listaAux.isEmpty()){
+		        	    		 Jugador unoJ =new Jugador();
+		        	    		 
+		        	    		 unoJ=listaAux.poll();
+		        	    		 
+		        	    		 if(unoJ.getVidasParaJugar()!=0){
+		        	    		 listajugadores.addLast(unoJ);
+		        	    		 }else{
+		        	    			 
+		        	    			 
+		        	    			 System.out.println(" jugador   |"+unoJ.getIdjugador() +"| -----PIERDE JUEGO-----!!	por otro jugador " );
+		        	    		 }
+		        	    		 
+		        	    	 }  
+        			  
+        			
+		        			  
+		        		  }
+		        		  
+		        		  
+		        		  listajugadores.addFirst(unJugador);
+		        		  
+		        	  }
+   		                  
+   		                  
+   		                  if(listajugadores.peekFirst().getVidasParaJugar()==0 && !listajugadores.isEmpty()){
+	                       System.out.println(" Jugador   |"+ unJugador.getIdjugador()+"|    -----------PIERDE JUEGO----- (GAME OVER)  !!!");
+	                       listajugadores.poll();
+	
+                          }else{
+	
+ 	                         listajugadores.addLast(listajugadores.poll());
+                          }
+		        	
+		        	
+		        	
+		        	
+		        	
+		        	
+					     }
+			
+			 
+			 
+			 
+			 }//fin del if 	 
+					    	 
+
+			 System.out.println("------------------------------------------------------------------");	 
+		
+		}// fin del while de lista
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+	
+	
+
+		
+		
+		System.out.println("");System.out.println("");
+		
+		System.out.println("============================FIN AHORACADO==========================");
+		System.out.println("");
 		}
 		
 		
@@ -337,6 +499,9 @@ boolean letraEsAdivinada(ArrayList<Character> palabradivinada, String palabraGen
 	
 	boolean band=true;
 	for (int i=0;i<palabradivinada.size();i++){
+		
+		
+		//System.out.println(palabradivinada.get(i)+" _______"+palabraGenerada.charAt(i));
 	if(palabradivinada.get(i)!=palabraGenerada.charAt(i)){
 		
 		band=false;
@@ -393,10 +558,12 @@ boolean letraEsAdivinada(ArrayList<Character> palabradivinada, String palabraGen
 			
 			
 			
-		}else if (palabrageneradAleatoria.equals(letrasGeneradaAleatoria)){
+		}else {
+			if (palabrageneradAleatoria.equals(letrasGeneradaAleatoria)){
+		
 			
 			valor=2;
-			
+			}	
 		}
 		
 			
@@ -486,7 +653,7 @@ return pilapasada;
 		palabra.add("NIRVANA");
 		palabra.add("ZORRO");
 		palabra.add("ODONTOLOGO");
-		palabra.add("AFTALMOLOGO");
+		palabra.add("OFTALMOLOGO");
 		palabra.add("PROFESOR");
 		palabra.add("CARGADOR");
 		palabra.add("FARMACIA");
@@ -531,6 +698,27 @@ return pilapasada;
 		
 		
 		return palabra;
+	}
+
+	@Override
+	public double totalApuesta() {
+		
+		 return  this.getCantidaDeJugadores()*this.getImporteDeApuesta();
+	}
+
+
+	@Override
+	public double totalPremio() {
+	
+		return totalApuesta()-totalComicion();
+	}
+
+
+	@Override
+	public double totalComicion() {
+		
+		int comicion=24;//% de comicion
+		return totalApuesta()*comicion/100;
 	}
 
 }

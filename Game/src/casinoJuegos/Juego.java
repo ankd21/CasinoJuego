@@ -57,8 +57,8 @@ public abstract class Juego {
 	}
 
 	public abstract void Jugar();
-	public abstract void totalApuesta();
-	public abstract void totalPremio();
-	public abstract void totalComicion();
+	public abstract double totalApuesta();
+	public abstract double totalPremio();
+	public abstract double totalComicion();
 
 }

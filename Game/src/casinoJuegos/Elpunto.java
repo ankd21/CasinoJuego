@@ -15,6 +15,7 @@ public class Elpunto extends Juego {
 
 	public Elpunto(double importeDeApuesta, String nombreDelJuego) {
 		super(importeDeApuesta, nombreDelJuego);
+		this.setCantidaDeJugadores(2);
 	
 	}
 
@@ -30,7 +31,7 @@ public class Elpunto extends Juego {
 
 	@Override
 	public void Jugar() {
-		System.out.println("_________________________El PUNTO_________________________");
+		System.out.println("_________________________________El PUNTO___________________________");
 		System.out.println("Cantidad jugadores  : |"+this.getCantidaDeJugadores()+"|  Importe de apuesta por cada jugador : $ "  +this.getImporteDeApuesta());
 		System.out.println(" ");
 		Queue<Jugador>  coladejugador = new LinkedList<Jugador>();
@@ -41,7 +42,7 @@ public class Elpunto extends Juego {
 		
 		for (int i=1;i<=this.getCantidaDeJugadores();i++){
 			
-			jugad = new Jugador(i,4,0);
+			jugad = new Jugador(i,4,0); //i es id de jugador  4 lanzamientos,
 			
 			coladejugador.add(jugad);
 		}
@@ -193,34 +194,34 @@ public class Elpunto extends Juego {
 		
 		System.out.println("");
 		
-		System.out.println("________________FIN DEL JUEGO PUNTO_________________");
+		System.out.println("_______________________FIN DEL JUEGO PUNTO______________________");
 		System.out.println("  ");
 		System.out.println("  ");
 		System.out.println("  ");
 	}
 
 	@Override
-	public void totalApuesta() {
+	public double totalApuesta() {
 		
-		
-		Double total= this.getCantidaDeJugadores()*this.getImporteDeApuesta();
-		
-		System.out.println("total apues del punto:" +total);
-		
+		 return  this.getCantidaDeJugadores()*this.getImporteDeApuesta();
 	}
+
 
 	@Override
-	public void totalPremio() {
-		// TODO Auto-generated method stub
-		
+	public double totalPremio() {
+	
+		return totalApuesta()-totalComicion();
 	}
+
 
 	@Override
-	public void totalComicion() {
-		// TODO Auto-generated method stub
+	public double totalComicion() {
 		
+		int comicion=24;//% de comicion
+		return totalApuesta()*comicion/100;
 	}
 
+	
 	
 	
 	

@@ -21,6 +21,12 @@ public class Jugador {
 		this.vidasParaJugar = vidasParaJugar;
 	}
 	
+	public Jugador(int idjugador, int cantDejugadas) {
+		super();
+		this.idjugador = idjugador;
+		this.cantDejugadas = cantDejugadas;
+		
+	}
 	public Jugador(int idjugador, int vidasParaJugar, Stack<String> pilaDibujoAhorcado) {
 		super();
 		this.idjugador = idjugador;

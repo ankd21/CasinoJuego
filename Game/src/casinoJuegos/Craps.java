@@ -7,15 +7,9 @@ import java.util.Random;
 
 public class Craps  extends Juego{
 
+
+
 	
-	int IdJugador;
-	int Cantjugadas;
-
-
-	public Craps(double importeDeApuesta, String nombreDelJuego, int idJugador) {
-		super(importeDeApuesta, nombreDelJuego);
-		IdJugador = idJugador;
-	}
 
 
 	public Craps() {
@@ -30,6 +24,7 @@ public class Craps  extends Juego{
 
 	public Craps(double importeDeApuesta, String nombreDelJuego) {
 		super(importeDeApuesta, nombreDelJuego);
+		this.setCantidaDeJugadores(1);
 	
 	}
 
@@ -53,95 +48,66 @@ public class Craps  extends Juego{
 
 
 
-	@Override
-	public void totalApuesta() {
 
+
+
+
+
+	public void JugarListaCraps(LinkedList<Jugador> listjugadores){
 		
-	}
-
-	@Override
-	public void totalPremio() {
-		
-	}
-
-	@Override
-	public void totalComicion() {
-		
-		
-	}
-
-
-
-	public int getIdJugador() {
-		return IdJugador;
-	}
-
-
-	public void setIdJugador(int idJugador) {
-		IdJugador = idJugador;
-	}
-
-	public int getCantjugadas() {
-		return Cantjugadas;
-	}
-
-	public void setCantjugadas(int cantjugadas) {
-		Cantjugadas = cantjugadas;
-	}
-
-
-
-	public void JugarListaCraps(LinkedList<Craps> lcraps){
 		int tiraDadoUno,tiraDadoDos;
 	
 		
 		Random tiraDado = new Random();
-		Random sigeOnosigue = new Random();
+		Random sigueAleatorioBoolean = new Random();
 		int sumaDado;
 		boolean bandera;
-	    Craps unCraps;
-		while(lcraps.isEmpty()!=true){
+	    Jugador unjugador;
+	   
+	    
+	    
+		while(listjugadores.isEmpty()!=true){
 		   bandera=true;
-		   while(bandera &&lcraps.isEmpty()!=true){
+		   while(bandera &&listjugadores.isEmpty()!=true){
 			  
 			   tiraDadoUno=(int)(tiraDado.nextDouble() * 6 + 1);
 			   tiraDadoDos=(int)(tiraDado.nextDouble() * 6 + 1);
 			   
 			   sumaDado=tiraDadoUno+tiraDadoDos; 
-				  unCraps= lcraps.peek();
+				  unjugador= listjugadores.peek();
 				  
-				 if(unCraps.getCantjugadas() > 0 && sumaDado==7 ){ 
-					    System.out.println("jugador: " +unCraps.getIdJugador()+" TIRO : "+ tiraDadoUno+"+"+tiraDadoUno+"= "+sumaDado+"  PERDIO SU APUESTA !! abandona.. "+"____________________________"+ unCraps.getIdJugador()+" ___jugadas"+unCraps.getCantjugadas());
-					    lcraps.poll();
-				 }else if((sumaDado==7 ||sumaDado==11 )&& unCraps.getCantjugadas() ==0){
-		    	  unCraps= lcraps.peek();
+				 if(unjugador.getCantDejugadas() > 0 && sumaDado==7 ){ 
+					    System.out.println("El jugador: " +unjugador.getIdjugador()+" TIRO : "+ tiraDadoUno+"+"+tiraDadoUno+"= "+sumaDado+"  PERDIO SU APUESTA !! abandona.. ");
+					    listjugadores.poll();
+				 }else if((sumaDado==7 ||sumaDado==11 )&& unjugador.getCantDejugadas() ==0){
+		    	  unjugador= listjugadores.peek();
 		    	 
-		    	        if(sigeOnosigue.nextBoolean()==true){
-		    		     System.out.println("jugador: " +unCraps.getIdJugador()+" TIRO : "+ tiraDadoUno+"+"+tiraDadoUno+"= "+sumaDado+"   GANA SU APUESTA !! y sigue " );
-		    	         unCraps=lcraps.poll();
-		    	         lcraps.addLast(unCraps);
+		    	        if(sigueAleatorioBoolean.nextBoolean()==true){
+		    		     System.out.println("El jugador: " +unjugador.getIdjugador()+" TIRO : "+ tiraDadoUno+"+"+tiraDadoUno+"= "+sumaDado+"   GANA SU APUESTA !! y sigue " );
+		    	         unjugador=listjugadores.poll();
+		    	         listjugadores.addLast(unjugador);
 		    	   	  
 				    	  bandera=true;  
 		    	         }else{
-		    		          System.out.println("jugador: " +unCraps.getIdJugador()+" TIRO : "+ tiraDadoUno+"+"+tiraDadoUno+"= "+sumaDado+"   GANA SU APUESTA !! y se retira"+"____________________________"+ unCraps.getIdJugador()+" ___jugadas"+unCraps.getCantjugadas());
-		    		          unCraps=lcraps.poll();
+		    		          System.out.println("El jugador: " +unjugador.getIdjugador()+" TIRO : "+ tiraDadoUno+"+"+tiraDadoUno+"= "+sumaDado+"   GANA SU APUESTA !! y se retira");
+		    		          unjugador=listjugadores.poll();
 		    		          bandera=false;  
 		    	         }
 		    	  
 		    
 		    	
 		         }else if(sumaDado==2||sumaDado==3 ||sumaDado==12){
-		    	   unCraps= lcraps.peek();
-		    	    System.out.println("jugador: " +unCraps.getIdJugador()+" TIRO : "+ tiraDadoUno+"+"+tiraDadoUno+"= "+sumaDado+"  PERDIO SU APUESTA !! abandona.. "+"____________________________"+ unCraps.getIdJugador());
-		    	    lcraps.poll();
+		    	   unjugador= listjugadores.peek();
+		    	    System.out.println("El jugador: " +unjugador.getIdjugador()+" TIRO : "+ tiraDadoUno+"+"+tiraDadoUno+"= "+sumaDado+"  PERDIO SU APUESTA !! abandona.. ");
+		    	    listjugadores.poll();
 		    		bandera=false;  
 		       }else {
-		    	  unCraps= lcraps.peek();
-		    	   System.out.println("jugador: " +unCraps.getIdJugador()+" TIRO : "+ tiraDadoUno+"+"+tiraDadoUno+"= "+sumaDado+"  SIGUE TIRANDO!! .. ");
-		    	   unCraps=lcraps.poll();
-		    	   unCraps.setCantjugadas(1);
-		    	   lcraps.addFirst(unCraps);
-		    	   JugarListaCraps(lcraps);
+		    	  unjugador= listjugadores.peek();
+		    	   System.out.println("El jugador: " +unjugador.getIdjugador()+" TIRO : "+ tiraDadoUno+"+"+tiraDadoUno+"= "+sumaDado+"  SIGUE TIRANDO!! .. ");
+		    	   unjugador=listjugadores.poll();
+		    	   unjugador.setCantDejugadas(1);
+		    	   listjugadores.addFirst(unjugador);
+		    	   JugarListaCraps(listjugadores);
 		    	  
 		      }
 		      
@@ -152,28 +118,53 @@ public class Craps  extends Juego{
 		   
 		
 		}//end while 1
-		 
-	
+		
+		
 		}
 	@Override
 	public void Jugar() {
+		System.out.println("____________________INCIO DEL JUEGO CRAPS_________________________");
+		System.out.println("cantidad de jugadores : |"+this.getCantidaDeJugadores()+ "| importe de apuesta por jugador :"+this.getImporteDeApuesta());
+		System.out.println("");System.out.println("");
+	
+		LinkedList<Jugador> listaDejugadoresCrap= new LinkedList<Jugador>();
+				 
+		 for (int i=1; i<= this.getCantidaDeJugadores();i++){
+			    Jugador unjugador = new Jugador(i,0); // i es id de jugador , 0  es cantidad de jugadas 
+				listaDejugadoresCrap.add(unjugador);
+				
+			}
+		 
+		 
+	
 		
-		Random m = new Random();
-		LinkedList<Craps> listaDejugadoresCraps= new LinkedList<Craps>();
-		
-		for (int i=1; i<= this.getCantidaDeJugadores();i++){
-			
-			Craps uno= new Craps((m.nextDouble()*10.0+10.0),this.getNombreDelJuego(),i);
-			listaDejugadoresCraps.add(uno);
-			
-		}
+		JugarListaCraps(listaDejugadoresCrap);
 		
 		
-		JugarListaCraps(listaDejugadoresCraps);
+		System.out.println("");System.out.println("");
+		System.out.println("____________________FIN  DEL JUEGO CRAPS_________________________");
+	}
+
+
+	@Override
+	public double totalApuesta() {
 		
+		 return  this.getCantidaDeJugadores()*this.getImporteDeApuesta();
+	}
+
+
+	@Override
+	public double totalPremio() {
+	
+		return totalApuesta()-totalComicion();
+	}
+
+
+	@Override
+	public double totalComicion() {
 		
-		  
-		
+		int comicion=24;//% de comicion
+		return totalApuesta()*comicion/100;
 	}
 
 }
